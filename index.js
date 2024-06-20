@@ -1,9 +1,8 @@
-import {GameGrid} from './components/GameGrid/game-grid.component.js'
+import { AppComponent } from "./ui/App.component.js"
 
 
 const rootElement = document.getElementById('root')
-const gameGridElement = GameGrid()
 
-rootElement.append(gameGridElement);
+const appElement = AppComponent()
+rootElement.append(appElement)
 
-//остановился на 47:38
