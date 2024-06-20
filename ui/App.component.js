@@ -1,4 +1,5 @@
 import { getPoints } from "../data/state-manager.js"
+
 export function AppComponent() {
     const points = getPoints()
     const element = document.createElement('div')
