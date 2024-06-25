@@ -7,13 +7,16 @@ const _state = {
         catch: 3
     },
     settings: {
-        pointsToLose: 5,
+        pointsToLose: 30,
         pointsToWin: 5,
         gridSize: {
-            width: 4,
-            height: 4
+            width: 6,
+            height: 6
         },
-    }
+    },
+   googlePosition: {
+    x:0,y:0
+   }
 }
 
 let _observer = () => { }
@@ -49,7 +52,12 @@ export function getPoints() {
 export function getGameStatus() {
     return _state.gameStatus
 }
-
+export function getGridSize(){
+    return {
+        height: _state.settings.gridSize.height,
+        width: _state.settings.gridSize.width
+    }
+}
 export function playAgain(){
     _state.gameStatus = GAME_STATUSES.IN_PROGRESS
     _state.points.catch = 0
