@@ -5,7 +5,7 @@ export function LoseComponent(){
     const titleElement = document.createElement('h1')
     titleElement.append('you lose')
     element.append(titleElement)
-    element.append(`catch: ${points.catch} miss:${points.miss}`)
+    element.append(`player1: ${points.players[0].value}; player2:${points.players[1].value}; google: ${points.google}`)
     const playAgainButtonElement = document.createElement('button')
     playAgainButtonElement.append('Play again')
     playAgainButtonElement.addEventListener('click',()=>{
