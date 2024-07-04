@@ -1,4 +1,4 @@
-import { GAME_STATUSES } from "./constants.js";
+import { DIRECTIONS, GAME_STATUSES } from "./constants.js";
 
 const _state = {
   gameStatus: GAME_STATUSES.IN_PROGRESS,
@@ -23,8 +23,8 @@ const _state = {
     y: 0,
   },
   players:{
-    "1": {x:1,y:1},
-    "2": {x:2,y:2}
+    "1": {x:1,y:0},
+    "2": {x:1,y:1}
   }
 }
 };
@@ -45,6 +45,14 @@ function _moveGoogleToRandomPosition() {
   const newX = _getRandomInt(_state.settings.gridSize.width);
   const newY = _getRandomInt(_state.settings.gridSize.height);
   if (newX === getGooglePosition().x && newY === getGooglePosition().y) {
+    _moveGoogleToRandomPosition();
+    return;
+  }
+  if (newX === getPlayerPositions()[0].x && newY === getPlayerPositions()[0].y) {
+    _moveGoogleToRandomPosition();
+    return;
+  }
+  if (newX === getPlayerPositions()[1].x && newY === getPlayerPositions()[1].y) {
     _moveGoogleToRandomPosition();
     return;
   }
@@ -118,4 +126,35 @@ export function playAgain() {
   _state.points.players.forEach(points => points.valude = 0)
   _play();
   _observer();
+}
+
+export function movePlayer(id,direction){
+const position = _state.positions.players[id]
+const newPosition = {...position}
+
+const updater = {
+  [DIRECTIONS.UP]: ()=>newPosition.y--,
+  [DIRECTIONS.DOWN]: ()=>newPosition.y++,
+  [DIRECTIONS.LEFT]: ()=>newPosition.x--,
+  [DIRECTIONS.RIGHT]: ()=>newPosition.x++
+
+}
+updater[direction]()
+//guards//checker//validators
+if(!_isWithinBounds(newPosition)) return
+// if(!_isCellFree(newPosition)) return
+
+_state.positions.players[id] = newPosition
+_observer()
+}
+
+function _isWithinBounds(positions){
+  const {x,y} = positions
+  if (x<0 || x>_state.settings.gridSize.width-1){
+    return false
+  }
+  if(y<0||y>_state.settings.gridSize.height-1){
+    return false
+  }
+  return true
 }
